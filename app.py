@@ -108,3 +108,15 @@ def delete_performance(perf_id):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+
+@app.route('/init_test_data')
+def init_test_data():
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    c.execute("DELETE FROM stars")
+    for i in range(1, 21):
+        c.execute("INSERT INTO stars (name, position, award, photo_url) VALUES (?, ?, ?, ?)",
+                  ('KEN', '業務副總', '年度業績總冠軍', f'/static/{i:02d}.jpg'))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('index'))
