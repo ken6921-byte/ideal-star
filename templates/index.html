@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>理想之星</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght:900&display=swap" rel="stylesheet">
     <style>
         * { font-family: 'Noto Sans TC', sans-serif; margin: 0; padding: 0; }
         body { 
-            background: url('/static/background.jpg') center/cover no-repeat fixed;
+            background: url('/static/background.webp') center/cover no-repeat fixed;
             min-height: 100vh; 
             overflow-x: hidden;
         }
@@ -32,7 +32,7 @@
         }
         @keyframes scroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-420px * 20)); }
+            100% { transform: translateX(calc(-420px * 40)); }
         }
         .star-card {
             background: #fff;
@@ -83,22 +83,26 @@
             text-decoration: none;
             box-shadow: 0 12px 40px rgba(0,0,0,0.6);
         }
+        @media (max-width: 768px) {
+            .main-title { font-size: 4rem; letter-spacing: 10px; }
+        }
     </style>
 </head>
 <body>
     <h1 class="main-title">理想之星</h1>
     <div class="slider-container">
         <div class="slider-track">
-            {% for i in range(1, 21) %}
-            {% for star in stars %}
+            {% for star in stars + stars %}
             <div class="star-card">
-                <img loading="lazy" src="/static/{{ '%02d' % ((loop.index0 + i) % 20 + 1) }}.jpg" class="star-img" alt="{{ star[1] }}">
+                <picture>
+                    <source media="(max-width: 768px)" srcset="/static/{{ '%02d' % ((loop.index0 % 20) + 1) }}_mobile.webp">
+                    <img loading="lazy" src="/static/{{ '%02d' % ((loop.index0 % 20) + 1) }}.webp" class="star-img" alt="{{ star[1] }}">
+                </picture>
                 <div class="star-info">
                     <div class="star-award">🏆 {{ star[3] }}</div>
                     <div class="star-name">{{ star[1] }}</div>
                 </div>
             </div>
-            {% endfor %}
             {% endfor %}
         </div>
     </div>
