@@ -120,3 +120,9 @@ def init_test_data():
     conn.commit()
     conn.close()
     return redirect(url_for('index'))
+
+@app.route('/git_pull')
+def git_pull():
+    import subprocess
+    result = subprocess.run(['git', 'pull'], cwd='/home/ken6921/ideal-star', capture_output=True, text=True)
+    return f"<pre>{result.stdout}\n{result.stderr}</pre><br><a href='/'>返回首頁</a>"
